@@ -1,0 +1,16 @@
+﻿<Window x:Class="solution_wpfapp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:solution_wpfapp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Margin="50" VerticalAlignment="Center">
+            <TextBlock FontSize="36" Margin="10" HorizontalAlignment="Center">Welcome to ExamCenter v1.0</TextBlock>
+            <Button FontSize="18" HorizontalAlignment="Center" Padding="10" Click="ContinueButtonClick">Press to continue...</Button>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,23 @@
+﻿<Window x:Class="solution_wpfapp.ExamWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:solution_wpfapp"
+        xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d"
+        Title="ExamWindow" Height="450" Width="1280">
+    <Grid Name="Parent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <wpf:WebView2 Grid.Column="0" Name="ExamWebView" MinWidth="500" Margin="10"></wpf:WebView2>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" MinWidth="600">
+            <wpf:WebView2 Name="ParticipantWebView" Source="https://www.microsoft.com" Width="600" Height="300" Margin="10" />
+        </StackPanel>
+        
+
+    </Grid>
+    
+</Window>

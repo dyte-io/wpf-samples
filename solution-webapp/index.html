@@ -1,0 +1,54 @@
+<!--    Simple Dyte Meeting Web Backend for WPF application  
+        Run this web page first before running WPF application if using both together
+        Pass your roomName and authToken in URL as query-string. 
+        These values can be retrieved from Dyte REST APIs. 
+        Use 'window.chrome.webview.postMessage' to send messages to WPF application
+        For any help, reach out to us on: https://community.dyte.io/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dyte Meeting</title>
+
+    <head>
+        <script type="module">
+            import { defineCustomElements } from 'https://cdn.jsdelivr.net/npm/@dytesdk/ui-kit@1.40.0/loader/index.es2017.js';
+            defineCustomElements();
+        </script>
+        <script src="https://cdn.dyte.in/core/dyte-0.45.2.js"></script>
+    </head>
+</head>
+
+<body>
+    <dyte-participant-tile id="my-meeting-participant" show-setup-screen="true" />
+
+    <script>
+        //Pass roomName and authToken as query string parameters to this web page to join the meeting
+        const searchParams = new URL(window.location.href).searchParams;
+        const authToken = searchParams.get('authToken');
+        const roomName = searchParams.get('roomName');
+
+        DyteClient.init({
+            authToken,
+            roomName,
+        }).then((meeting) => {
+
+
+        meeting.recording.on('recordingUpdate', (e) => {
+            window.chrome.webview.postMessage("recordingUpdate:" + e);
+        });
+
+        meeting.joinRoom();
+            
+        document.getElementById('my-meeting-participant').participant = meeting.self;
+        
+        });
+    </script>
+</body>
+
+</html>
