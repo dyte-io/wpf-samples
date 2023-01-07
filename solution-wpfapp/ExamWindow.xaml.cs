@@ -19,12 +19,29 @@ namespace solution_wpfapp
     /// </summary>
     public partial class ExamWindow : Window
     {
+
         public ExamWindow()
         {
             InitializeComponent();
             Loaded += ExamWindowLoaded;
             ParticipantWebView.WebMessageReceived += ParticipantWebViewWebMessageReceived;
+            SendMessage.Click += SendMessageClick;
+            InitializeAsync();
+        }
 
+        async void InitializeAsync()
+        {
+            await ParticipantWebView.EnsureCoreWebView2Async(null);
+        }
+
+        /// <summary>
+        /// Send messages to participants as Chat messages to see communication
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SendMessageClick(object sender, RoutedEventArgs e)
+        {
+            ParticipantWebView.ExecuteScriptAsync($"meeting.chat.sendTextMessage('{ChatMessage.Text}');");
         }
 
         /// <summary>

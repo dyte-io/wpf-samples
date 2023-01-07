@@ -8,13 +8,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dyte Meeting</title>
-
     <head>
         <script type="module">
             import { defineCustomElements } from 'https://cdn.jsdelivr.net/npm/@dytesdk/ui-kit@1.40.0/loader/index.es2017.js';
@@ -23,32 +21,42 @@
         <script src="https://cdn.dyte.in/core/dyte-0.45.2.js"></script>
     </head>
 </head>
-
 <body>
-    <dyte-participant-tile id="my-meeting-participant" show-setup-screen="true" />
-
+    <div>
+        <dyte-participant-tile id="my-meeting-participant" />
+    </div>
     <script>
         //Pass roomName and authToken as query string parameters to this web page to join the meeting
         const searchParams = new URL(window.location.href).searchParams;
         const authToken = searchParams.get('authToken');
         const roomName = searchParams.get('roomName');
-
+        //Initialize DyteClient -> A Dyte Meeting
         DyteClient.init({
             authToken,
             roomName,
         }).then((meeting) => {
-
-
+        //Attach meeting object to window object of the browser
+        window.meeting = meeting;
+        //Subscribe to events emitted by Dyte meeting.
         meeting.recording.on('recordingUpdate', (e) => {
-            window.chrome.webview.postMessage("recordingUpdate:" + e);
+            window.chrome.webview?.postMessage("recordingUpdate:" + e);
         });
+        meeting.self.on('roomJoined', () => {
+            window.chrome.webview?.postMessage("roomJoined");
+        });
+        meeting.self.on('roomLeft', () => {
+            window.chrome.webview?.postMessage("roomLeft");
+        });
+        meeting.chat.on('chatUpdate', ({ message, messages }) => {
+                window.chrome.webview?.postMessage(message);
+                alert(message.message);
+            });
 
+        //Join the meeting room
         meeting.joinRoom();
-            
+        //Set participant tile to self i.e. display your own video in participant view    
         document.getElementById('my-meeting-participant').participant = meeting.self;
-        
-        });
+        });        
     </script>
 </body>
-
 </html>

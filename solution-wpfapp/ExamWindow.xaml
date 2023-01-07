@@ -11,13 +11,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <wpf:WebView2 Grid.Column="0" Name="ExamWebView" MinWidth="500" Margin="10"></wpf:WebView2>
-        <StackPanel Grid.Column="1" HorizontalAlignment="Right" MinWidth="600">
-            <wpf:WebView2 Name="ParticipantWebView" Source="https://www.microsoft.com" Width="600" Height="300" Margin="10" />
+        <wpf:WebView2 Grid.Column="0" Name="ExamWebView"/>
+        <StackPanel Grid.Column="2" VerticalAlignment="Top" Background="AliceBlue" >
+            <wpf:WebView2 Name="ParticipantWebView" Width="600" Height="300" Margin="20" DefaultBackgroundColor="AliceBlue"  />
+            <TextBox Name="ChatMessage" Padding="5"/>
+            <Button Name="SendMessage" Padding="5"> Send Message </Button>
         </StackPanel>
-        
-
     </Grid>
-    
+
 </Window>
